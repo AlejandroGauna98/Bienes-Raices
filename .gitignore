@@ -1,0 +1,41 @@
+# Ignorar los archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar los módulos de Node.js
+node_modules/
+
+# Ignorar los archivos de registro de errores y archivos de caché de PHP
+*.log
+*.pot
+*.mo
+*.pot
+*.pot
+*.php[cod]
+*_flymake.php
+*.cache
+*.sql
+
+# Ignorar los archivos de configuración de PHP
+php.ini
+php.ini-development
+php.ini-production
+php.ini-production.cli
+php.ini-recommended
+
+# Ignorar los archivos de caché de Composer
+/vendor/
+/.idea
+.phpunit.result.cache
+
+# Ignorar los archivos de caché de NPM
+.cache/
+.npm/
+
+# Ignorar los archivos de compilación de JavaScript
+dist/
+build/
+
+# Ignorar los archivos de dependencias de TypeScript
+node_modules/
+*.js.map
