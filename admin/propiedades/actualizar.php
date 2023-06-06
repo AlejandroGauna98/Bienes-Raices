@@ -78,32 +78,44 @@
             $errores[] = "El vendedor es obligatorio";
         }
 
-        if(!$imagen['name']){
-            $errores[] = 'La imagen es obligatoria';
-        }
+        //Validar por tamaño (1mb máximo)
+        /*$medida = 1000 * 1000;
+        if($imagen['size'] > $medida){
+            $errores[]= "La imagen es muy pesada";
+        }*/
 
         //Si el arreglo esta vacio, realiza la consulta
         if(empty($errores)){
-
-            //Subida de archivos
             $carpetaImagenes = '../../imagenes/';
 
             //crear carpeta
             if(!is_dir($carpetaImagenes)){
                 mkdir($carpetaImagenes);
             }
+            $nombreImagen = '';
 
-            //crear el nombre unico
-            $nombreImagen = md5(uniqid(rand(),true)) .".jpg";
+            //Subida de archivos
+            if($imagen['name']){
+                //Eliminar imagen anterior 
+                unlink($carpetaImagenes. $propiedadActual['imagen']);
 
-            //subir la imagen
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+                //crear el nombre unico
+                $nombreImagen = md5(uniqid(rand(),true)) .".jpg";
+
+                //subir la imagen
+                move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
+            }else{
+                $nombreImagen = $propiedadActual['imagen'];
+            }
+          
+
+            
 
 
             //Ingresar en la base de datos
-            $query = "INSERT INTO propiedades (titulo, precio, imagen,descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) VALUES ('$titulo', '$precio',
-            '$nombreImagen','$descripcion', '$habitaciones', '$wc', '$estacionamiento','$creado' ,'$vendedorId')";
-
+            $query = "UPDATE propiedades SET titulo = '${titulo}', precio = '${precio}', imagen = '${nombreImagen}', descripcion = '${descripcion}',
+                    habitaciones = ${habitaciones}, wc = ${wc}, estacionamiento = ${estacionamiento},
+                    vendedores_id = ${vendedorId} WHERE id = ${id}";
             $resultado = mysqli_query($db,$query);
 
             if($resultado){
